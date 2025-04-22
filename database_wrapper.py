@@ -8,7 +8,7 @@ def connect_to_database():
             host='localhost',          # Replace with your host
             database='restaurant',  # Replace with your database name
             user='root',      # Replace with your username
-            password='64mz8nkb',   # Replace with your password
+            password='hihihihi',   # Replace with your password
             auth_plugin='mysql_native_password'
         )
 
