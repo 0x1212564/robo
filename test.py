@@ -115,74 +115,7 @@ def determine_direction(sensors):
         return "Rechts"
     else:
         return "Machine Stop"
-    """
-    Determine direction based on sensor readings
-    
-    Args:
-        sensors (list): List of 5 sensor readings (0 or 1)
-        
-    Returns:
-        str: Direction command ("Rechtdoor", "Links", "Rechts", or "Machine Stop")
-    """
-    # Convert sensor readings to tuple for easier pattern matching
-    s = tuple(sensors)
-    
-    # Check for overshoot (all sensors on white)
-    if s == (1, 1, 1, 1, 1):
-        # Overshoot detected, use last significant decision if available
-        for last_move in reversed(move_history):
-            if last_move in ["Links", "Rechts"]:
-                return last_move
-        # If no turns in history, default to straight
-        return "Rechtdoor"
-    
-    # Define direction patterns
-    rechtdoor_patterns = [
-        (1, 1, 0, 1, 1),  # Middle sensor on black
-        (0, 0, 1, 0, 0),  # All outer sensors on black
-        (0, 1, 1, 1, 0),  # Two outer sensors on black
-        (0, 1, 1, 0, 0),  # Two outer right and center on black
-        (0, 0, 1, 1, 0),  # Two outer left and center on black
-        (0, 1, 0, 1, 1),  # Middle and outer left on black
-        (1, 1, 0, 1, 0),  # Middle and outer right on black
-        (1, 0, 0, 0, 1),  # Outer sensors on black
-        (0, 1, 0, 0, 1),  # Outer right and inner left on black
-        (1, 0, 1, 0, 0),  # Inner left and middle on black
-        (0, 0, 1, 0, 1),  # Inner right and middle on black
-    ]
-    
-    links_patterns = [
-        (1, 0, 1, 1, 1),  # Left sensor on black
-        (0, 1, 1, 1, 1),  # Left-most sensor on black
-        (1, 0, 0, 1, 1),  # Middle and left sensor on black
-        (0, 0, 0, 1, 1),  # Middle, left and left-most sensor on black
-        (0, 0, 0, 0, 1),  # 4 left sensors on black
-        (0, 0, 1, 1, 1),  # 2 left sensors on black
-    ]
-    
-    rechts_patterns = [
-        (1, 1, 1, 0, 1),  # Right sensor on black
-        (1, 1, 1, 1, 0),  # Right-most sensor on black
-        (1, 1, 0, 0, 1),  # Middle and right sensor on black
-        (1, 1, 0, 0, 0),  # Middle, right and right-most sensor on black
-        (1, 1, 1, 1, 1),  # All sensors on white
-        (1, 0, 0, 0, 0),  # 4 right sensors on black
-        (1, 1, 1, 0, 0),  # 2 right sensors on black
-    ]
-    
-    # Special case for all black
-    if s == (0, 0, 0, 0, 0):
-        return "Rechtdoor"
-    
-    # Check patterns and return corresponding direction
-    if s in rechtdoor_patterns:
-        return "Rechtdoor"
-    elif s in links_patterns:
-        return "Links"
-    elif s in rechts_patterns:
-        return "Rechts"
-    else:
-        return "Machine Stop"
+
 
 # Add a function to update the move history stack
 def update_move_history(direction):
